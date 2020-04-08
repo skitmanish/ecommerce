@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br/>
+<br/>
+
+{% for product in products.all %}
+
+
+<div class="row">
+  <div class="col-2" onclick="window.location='{% url 'detail' product.id %}'" style="cursor:pointer">
+<img src="{{product.image.url}}" class="img-fluid">
+  </div>
+  <div class="col-6"  onclick="window.location='{% url 'detail' product.id %}'" style="cursor:pointer">
+    <h1>{{product.title}}</h1>
+<p>{{product.body}}</p>
+  </div>
+</div>
+<br/>
+<br/>
+
+<br/>
+
+
+
+
+{% endfor %}
+
+{% endblock %}

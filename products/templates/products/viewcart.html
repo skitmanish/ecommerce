@@ -1,0 +1,155 @@
+
+
+<html lang="en">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% load staticfiles %}
+<body>
+
+
+
+  <nav class="navbar navbar-dark" style="background-color: #29333e;">
+
+
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'amazon.png' %}"></a>
+
+    <div class="row">
+
+    </div>
+
+
+
+    <div class="row ">
+
+
+      <div class="col-7">
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+      </div>
+      <div class="col-2">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Catagory
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'catagory' 0 %}">All Catagories</a>
+            <a class="dropdown-item" href="{% url 'catagory' 1 %}">Automotive</a>
+            <a class="dropdown-item" href="{% url 'catagory' 2 %}">Baby</a>
+
+            <a class="dropdown-item" href="{% url 'catagory' 3 %}">Beauty & personal care</a>
+            <a class="dropdown-item" href="{% url 'catagory' 4 %}">Books</a>
+            <a class="dropdown-item" href="{% url 'catagory' 5 %}">Computers</a>
+            <a class="dropdown-item" href="{% url 'catagory' 6 %}">Electronics</a>
+            <a class="dropdown-item" href="{% url 'catagory' 7 %}">Women's fasion</a>
+            <a class="dropdown-item" href="{% url 'catagory' 8 %}">Men's fasion</a>
+            <a class="dropdown-item" href="{% url 'catagory' 9 %}">Home & kitchen</a>
+            <a class="dropdown-item" href="{% url 'catagory' 10 %}">Sports & outdore</a>
+            <a class="dropdown-item" href="{% url 'catagory' 11 %}">Toys & games</a>
+
+          </div>
+        </li>
+      </div>
+
+      {% if user.is_authenticated %}
+
+      <div class="col-2">
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+        </li>
+      </div>
+      <form id="logout"  method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <input type='hidden'/>
+      </form>
+
+      {% else %}
+
+      <div class="col-1">
+        <li class="nav-item">
+
+          <a class="nav-item nav-link" href="{% url 'signup'%}">Sign Up</a>
+        </li>
+      </div>
+      <div class="col-1">
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+      </div>
+      {% endif %}
+
+      <br/>
+
+      <div class="col-1">
+        <li class="nav-item">
+          <a class="nav-link" href="#"> <i class="fa fa-shopping-cart" style="font-size:24px"></i></a>
+        </li>
+      </div>
+
+    </div>
+  </nav>
+  <div class="container">
+
+<h1>Shopping Cart</h1>
+<br/>
+<br/>
+
+    {% for product1 in product.all %}
+
+
+
+
+      <div class="row">
+      <div class="col-2">
+        <img src="{{product1.image.url}}" class='image-fluid'height=100 width=100/ >
+      </div>
+      <div class="col-4">
+        <a href="{% url 'detail' product1.id %}"><h5>   {{product1.title}}</h5></a>
+      </div>
+      <div class="col-2 ">
+        <h5 style="color:red;"> Price: Rs{{product1.price}}</h5>
+    </div>
+    <div class="col-2 ">
+    <select> Quantity
+  <a href='#'><option value="1">1</option></a>
+  <a href='#'><option value="2">2</option></a>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
+      </div>
+      </div>
+
+    <br/>
+    <br/>
+
+
+    {% endfor %}
+    <div class="row">
+      <div class="col-7">
+            <h3 style='color:green;'>Subtotal({{no}} items):Rs {{sum}}</h3>
+      </div>
+
+    </div>
+    <br/>
+    <form method="POST" action="{% url 'address' %}">
+      {% csrf_token %}
+    <input class="btn btn-primary" type="submit"  value="Proceed to checkout"/>
+
+    </form>
+
+
+
+  <footer class="text-muted">
+    <div class="container text-center">
+      &copy; amazon{% now 'Y'%}
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
