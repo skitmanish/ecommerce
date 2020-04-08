@@ -25,7 +25,7 @@ SECRET_KEY = '1n*$&60+1sdkao(i1y&7ge@+&y44l&i(m$dc_pj@5-f@bbi=ta'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -94,6 +94,9 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+db_from_env=dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
